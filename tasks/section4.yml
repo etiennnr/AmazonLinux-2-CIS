@@ -474,7 +474,8 @@
 
 - name: 'SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured'
   find:
-    paths: /etc/rsyslog.d/
+    paths:
+      - /etc/rsyslog.d/
     recurse: yes
     patterns: '*.conf'
   register: rsyslogd_conf_files

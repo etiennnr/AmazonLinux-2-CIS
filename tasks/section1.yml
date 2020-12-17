@@ -241,7 +241,8 @@
     - rule_1.1.3
     - low
 
-- yum:
+- name: 1.1.4 Ensure nosuid option set on /tmp partition (Scored)
+  yum:
     name: python-pip
     state: present
   when:
@@ -254,7 +255,7 @@
     - rule_1.1.4
     - low
 
-- name: install dependencies for mountopts-module
+- name: 1.1.4 Ensure nosuid option set on /tmp partition (Scored)
   pip:
     name: fstab
   when:
@@ -267,7 +268,8 @@
     - rule_1.1.4
     - low
 
-- mountopts:
+- name: 1.1.4 Ensure nosuid option set on /tmp partition (Scored)
+  mountopts:
     name: /tmp
     option: nosuid
     state: present
@@ -311,7 +313,8 @@
     - rule_1.1.4
     - low
 
-- yum:
+- name: 1.1.5 Ensure nosuid option set on /tmp partition (Scored)
+  yum:
     name: python-pip
     state: present
   when:
@@ -324,7 +327,7 @@
     - rule_1.1.5
     - low
 
-- name: install dependencies for mountopts-module
+- name: Ensure nosuid option set on /tmp partition (Scored)
   pip:
     name: fstab
   when:
@@ -337,7 +340,8 @@
     - rule_1.1.5
     - low
 
-- mountopts:
+- name: 1.1.5 Ensure nosuid option set on /tmp partition (Scored)
+  mountopts:
     name: /tmp
     option: noexec
     state: present
@@ -397,7 +401,8 @@
     - rule_1.1.6
     - low
 
-- yum:
+- name: 1.1.6 Ensure separate partition exists for /var (Scored)
+  yum:
     name: python-pip
     state: present
   check_mode: no
@@ -424,7 +429,8 @@
     - rule_1.1.6
     - low
 
-- mountopts:
+- name: 1.1.6 Ensure separate partition exists for /var (Scored)
+  mountopts:
     name: /var
     option: nosuid
     state: present
@@ -438,7 +444,8 @@
     - rule_1.1.6
     - low
 
-- mountopts:
+- name: 1.1.6 Ensure separate partition exists for /var (Scored)
+  mountopts:
     name: /var
     option: noexec
     state: present
@@ -452,7 +459,8 @@
     - rule_1.1.6
     - low
 
-- mountopts:
+- name: 1.1.6 Ensure separate partition exists for /var (Scored)
+  mountopts:
     name: /var
     option: nodev
     state: present
@@ -878,7 +886,7 @@
 - name: 'SCORED | 1.5.1 | PATCH | Ensure core dumps are restricted'
   sysctl:
     name: fs.suid_dumpable
-    value: 0
+    value: '0'
     state: present
     reload: yes
     sysctl_set: yes
@@ -896,7 +904,7 @@
 - name: 'SCORED | 1.5.2 | PATCH | Ensure address space layout randomization (ASLR) is enabled'
   sysctl:
     name: kernel.randomize_va_space
-    value: 2
+    value: '2'
     state: present
     reload: yes
     sysctl_set: yes
@@ -1035,7 +1043,9 @@
     - rule_1.6.2
     - high
 
-- stat: path=/etc/motd
+- name: 'SCORED | 1.7.1.1 | PATCH | Ensure message of the day is configured properly'
+  stat:
+    path: /etc/motd
   register: motd_link
   tags:
     - level1
@@ -1044,7 +1054,8 @@
     - rule_1.7.1.1
     - low
 
-- command: /usr/sbin/update-motd --disable
+- name: 'SCORED | 1.7.1.1 | PATCH | Ensure message of the day is configured properly'
+  command: /usr/sbin/update-motd --disable
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - motd_link.islink is defined and motd_link.stat.islink
@@ -1124,7 +1135,8 @@
     - low
 
 - name: 'NOTSCORED | 1.7.1.4 | PATCH | Ensure permissions on /etc/motd are configured'
-  stat: path=/etc/motd
+  stat:
+    path: /etc/motd
   register: motd_link
   tags:
     - level1
