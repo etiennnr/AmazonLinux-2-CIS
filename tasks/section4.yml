@@ -4,11 +4,11 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 ## END COPYRIGHT NOTICE ##
-- name: "NOTSCORED | 4.1.1.1 | PATCH | Ensure audit log storage size is configured"
+- name: 'NOTSCORED | 4.1.1.1 | PATCH | Ensure audit log storage size is configured'
   lineinfile:
     dest: /etc/audit/auditd.conf
-    regexp: "^max_log_file ="
-    line: "max_log_file = 10"
+    regexp: '^max_log_file ='
+    line: 'max_log_file = 10'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -19,11 +19,11 @@
     - rule_4.1.1.1
     - low
 
-- name: "SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full"
+- name: 'SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full'
   lineinfile:
     dest: /etc/audit/auditd.conf
-    regexp: "^admin_space_left_action"
-    line: "admin_space_left_action = halt"
+    regexp: '^admin_space_left_action'
+    line: 'admin_space_left_action = halt'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -34,11 +34,11 @@
     - rule_4.1.1.2
     - low
 
-- name: "SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full"
+- name: 'SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full'
   lineinfile:
     dest: /etc/audit/auditd.conf
-    regexp: "^space_left_action"
-    line: "space_left_action = email"
+    regexp: '^space_left_action'
+    line: 'space_left_action = email'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -49,11 +49,11 @@
     - rule_4.1.1.2
     - low
 
-- name: "SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full"
+- name: 'SCORED | 4.1.1.2 | PATCH | Ensure system is disabled when audit logs are full'
   lineinfile:
     dest: /etc/audit/auditd.conf
-    regexp: "^action_mail_acct"
-    line: "action_mail_acct = root"
+    regexp: '^action_mail_acct'
+    line: 'action_mail_acct = root'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -64,11 +64,11 @@
     - rule_4.1.1.2
     - low
 
-- name: "SCORED | 4.1.1.3 | PATCH | Ensure audit logs are not automatically deleted"
+- name: 'SCORED | 4.1.1.3 | PATCH | Ensure audit logs are not automatically deleted'
   lineinfile:
     dest: /etc/audit/auditd.conf
-    regexp: "^max_log_file_action"
-    line: "max_log_file_action = keep_logs"
+    regexp: '^max_log_file_action'
+    line: 'max_log_file_action = keep_logs'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -79,7 +79,7 @@
     - rule_4.1.1.3
     - low
 
-- name: "SCORED | 4.1.2 | PATCH | Ensure auditd service is enabled"
+- name: 'SCORED | 4.1.2 | PATCH | Ensure auditd service is enabled'
   service:
     name: auditd
     state: started
@@ -94,7 +94,7 @@
     - rule_4.1.2
     - low
 
-- name: "SCORED | 4.1.3 | PATCH | Ensure auditing for processes that start prior to auditd is enabled"
+- name: 'SCORED | 4.1.3 | PATCH | Ensure auditing for processes that start prior to auditd is enabled'
   replace:
     dest: /etc/default/grub
     regexp: '(^GRUB_CMDLINE_LINUX\s*\=\s*)(?:")(.+)(?<!audit=1)(?:")'
@@ -111,16 +111,17 @@
     - rule_4.1.3
     - low
 
-- name: "SCORED | 4.1.4 | PATCH | Ensure events that modify date and time information are collected"
+- name: 'SCORED | 4.1.4 | PATCH | Ensure events that modify date and time information are collected'
   blockinfile:
     path: /etc/audit/audit.rules
     state: present
     create: yes
-    block: " -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change\n
-            -a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k timechange\n
-            -a always,exit -F arch=b64 -S clock_settime -k time-change\n
-            -a always,exit -F arch=b32 -S clock_settime -k time-change\n
-            -w /etc/localtime -p wa -k time-change"
+    block:
+      " -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change\n
+      -a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k timechange\n
+      -a always,exit -F arch=b64 -S clock_settime -k time-change\n
+      -a always,exit -F arch=b32 -S clock_settime -k time-change\n
+      -w /etc/localtime -p wa -k time-change"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -131,16 +132,16 @@
     - rule_4.1.4
     - low
 
-- name: "SCORED | 4.1.5 | PATCH | Ensure events that modify user/group information are collected"
+- name: 'SCORED | 4.1.5 | PATCH | Ensure events that modify user/group information are collected'
   blockinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
     block: " -w /etc/group -p wa -k identity\n
-            -w /etc/passwd -p wa -k identity\n
-            -w /etc/gshadow -p wa -k identity\n
-            -w /etc/shadow -p wa -k identity\n
-            -w /etc/security/opasswd -p wa -k identity"
+      -w /etc/passwd -p wa -k identity\n
+      -w /etc/gshadow -p wa -k identity\n
+      -w /etc/shadow -p wa -k identity\n
+      -w /etc/security/opasswd -p wa -k identity"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -156,13 +157,14 @@
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
-    block: " -a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale\n
-            -a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale\n
-            -w /etc/issue -p wa -k system-locale\n
-            -w /etc/issue.net -p wa -k system-locale\n
-            -w /etc/hosts -p wa -k system-locale\n
-            -w /etc/sysconfig/network -p wa -k system-locale\n
-            -w /etc/sysconfig/network-scripts/ -p wa -k system-locale"
+    block:
+      " -a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale\n
+      -a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale\n
+      -w /etc/issue -p wa -k system-locale\n
+      -w /etc/issue.net -p wa -k system-locale\n
+      -w /etc/hosts -p wa -k system-locale\n
+      -w /etc/sysconfig/network -p wa -k system-locale\n
+      -w /etc/sysconfig/network-scripts/ -p wa -k system-locale"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -179,7 +181,7 @@
     state: present
     create: yes
     block: " -w /etc/selinux/ -p wa -k MAC-policy\n
-            -w /usr/share/selinux/ -p wa -k MAC-policy"
+      -w /usr/share/selinux/ -p wa -k MAC-policy"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -190,13 +192,13 @@
     - rule_4.1.7
     - low
 
-- name: "SCORED | 4.1.8 | PATCH | Ensure login and logout events are collected"
+- name: 'SCORED | 4.1.8 | PATCH | Ensure login and logout events are collected'
   blockinfile:
     path: /etc/audit/audit.d/audit.rules
     state: present
     create: yes
     block: " -w /var/log/lastlog -p wa -k logins\n
-            -w /var/run/faillock/ -p wa -k logins"
+      -w /var/run/faillock/ -p wa -k logins"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -207,14 +209,14 @@
     - rule_4.1.8
     - low
 
-- name: "SCORED | 4.1.9 | PATCH | Ensure session initiation information is collected"
+- name: 'SCORED | 4.1.9 | PATCH | Ensure session initiation information is collected'
   blockinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
     block: " -w /var/run/utmp -p wa -k session\n
-            -w /var/log/wtmp -p wa -k logins\n
-            -w /var/log/btmp -p wa -k logins"
+      -w /var/log/wtmp -p wa -k logins\n
+      -w /var/log/btmp -p wa -k logins"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -225,17 +227,18 @@
     - rule_4.1.9
     - low
 
-- name: "SCORED | 4.1.10 | PATCH | Ensure discretionary access control permission modification events are collected"
+- name: 'SCORED | 4.1.10 | PATCH | Ensure discretionary access control permission modification events are collected'
   blockinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
-    block: " -a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
-            -a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
-            -a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
-            -a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
-            -a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
-            -a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod"
+    block:
+      " -a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
+      -a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
+      -a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
+      -a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
+      -a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod\n
+      -a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -246,15 +249,16 @@
     - rule_4.1.10
     - low
 
-- name: "SCORED | 4.1.11 | PATCH | Ensure unsuccessful unauthorized file access attempts are collected"
+- name: 'SCORED | 4.1.11 | PATCH | Ensure unsuccessful unauthorized file access attempts are collected'
   blockinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
-    block: " -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access\n
-            -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access\n
-            -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access\n
-            -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access"
+    block:
+      " -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access\n
+      -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access\n
+      -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access\n
+      -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -265,7 +269,7 @@
     - rule_4.1.11
     - low
 
-- name: "SCORED | 4.1.12 | PATCH | Ensure use of privileged commands is collected"
+- name: 'SCORED | 4.1.12 | PATCH | Ensure use of privileged commands is collected'
   command: /bin/true
   changed_when: no
   when:
@@ -277,10 +281,10 @@
     - rule_4.1.12
     - low
 
-- name: "SCORED | 4.1.13 | PATCH | Ensure successful file system mounts are collected"
+- name: 'SCORED | 4.1.13 | PATCH | Ensure successful file system mounts are collected'
   lineinfile:
     dest: /etc/audit/rules.d/audit.rules
-    line: "-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
+    line: '-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -291,10 +295,10 @@
     - rule_4.1.13
     - low
 
-- name: "SCORED | 4.1.13 | PATCH | Ensure successful file system mounts are collected"
+- name: 'SCORED | 4.1.13 | PATCH | Ensure successful file system mounts are collected'
   lineinfile:
     dest: /etc/audit/rules.d/audit.rules
-    line: "-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts"
+    line: '-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -305,13 +309,14 @@
     - rule_4.1.13
     - low
 
-- name: "SCORED | 4.1.14 | PATCH | Ensure file deletion events by users are collected"
+- name: 'SCORED | 4.1.14 | PATCH | Ensure file deletion events by users are collected'
   blockinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
-    block: " -a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete\n
-            -a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete"
+    block:
+      " -a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete\n
+      -a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -322,10 +327,10 @@
     - rule_4.1.14
     - low
 
-- name: "SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected"
+- name: 'SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected'
   lineinfile:
     dest: /etc/audit/rules.d/audit.rules
-    line: "-w /etc/sudoers -p wa -k scope"
+    line: '-w /etc/sudoers -p wa -k scope'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -336,10 +341,10 @@
     - rule_4.1.15
     - low
 
-- name: "SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected"
+- name: 'SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected'
   lineinfile:
     dest: /etc/audit/audit.rules
-    line: "-w /etc/sudoers -p wa -k scope"
+    line: '-w /etc/sudoers -p wa -k scope'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -350,10 +355,10 @@
     - rule_4.1.15
     - low
 
-- name: "SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected"
+- name: 'SCORED | 4.1.15 | PATCH | Ensure changes to system administration scope (sudoers) is collected'
   lineinfile:
     dest: /etc/audit/rules.d/audit.rules
-    line: "-w /etc/sudoers.d -p wa -k scope"
+    line: '-w /etc/sudoers.d -p wa -k scope'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -364,10 +369,10 @@
     - rule_4.1.15
     - low
 
-- name: "SCORED | 4.1.16 | PATCH | Ensure system administrator actions (sudolog) are collected"
+- name: 'SCORED | 4.1.16 | PATCH | Ensure system administrator actions (sudolog) are collected'
   lineinfile:
     dest: /etc/audit/rules.d/audit.rules
-    line: "-w /var/log/sudo.log -p wa -k actions"
+    line: '-w /var/log/sudo.log -p wa -k actions'
     state: present
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -378,15 +383,15 @@
     - rule_4.1.16
     - low
 
-- name: "SCORED | 4.1.17 | PATCH | Ensure kernel module loading and unloading is collected"
+- name: 'SCORED | 4.1.17 | PATCH | Ensure kernel module loading and unloading is collected'
   blockinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
     block: " -w /sbin/insmod -p x -k modules\n
-            -w /sbin/rmmod -p x -k modules\n
-            -w /sbin/modprobe -p x -k modules\n
-            -a always,exit -F arch=b64 -S init_module -S delete_module -k modules"
+      -w /sbin/rmmod -p x -k modules\n
+      -w /sbin/modprobe -p x -k modules\n
+      -a always,exit -F arch=b64 -S init_module -S delete_module -k modules"
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -397,13 +402,13 @@
     - rule_4.1.17
     - low
 
-- name: "SCORED | 4.1.18 | PATCH | Ensure the audit configuration is immutable"
+- name: 'SCORED | 4.1.18 | PATCH | Ensure the audit configuration is immutable'
   lineinfile:
     path: /etc/audit/rules.d/audit.rules
     state: present
     create: yes
     insertafter: EOF
-    line: "-e 2"
+    line: '-e 2'
   ignore_errors: yes
   when:
     - amazonlinux2cis_level2 is defined and amazonlinux2cis_level2
@@ -414,9 +419,9 @@
     - rule_4.1.18
     - low
 
-- name: "SCORED | 4.2.1.1 | PATCH | Ensure rsyslog Service is enabled"
+- name: 'SCORED | 4.2.1.1 | PATCH | Ensure rsyslog Service is enabled'
   yum:
-    name: rsyslogd
+    name: rsyslog
     state: present
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -427,9 +432,9 @@
     - rule_4.2.1.1
     - low
 
-- name: "SCORED | 4.2.1.1 | PATCH | Ensure rsyslog Service is enabled"
+- name: 'SCORED | 4.2.1.1 | PATCH | Ensure rsyslog Service is enabled'
   systemd:
-    name: rsyslogd
+    name: rsyslog
     enabled: yes
   ignore_errors: yes
   when:
@@ -441,9 +446,9 @@
     - rule_4.2.1.1
     - low
 
-- name: "NOTSCORED | 4.2.1.2 | PATCH | Ensure logging is configured"
+- name: 'NOTSCORED | 4.2.1.2 | PATCH | Ensure logging is configured'
   debug:
-    msg: "Edit /etc/rsyslog.conf and /etc/rsyslog.d/ files as appropriate for your environment."
+    msg: 'Edit /etc/rsyslog.conf and /etc/rsyslog.d/ files as appropriate for your environment.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
@@ -452,7 +457,7 @@
     - rule_4.2.1.2
     - low
 
-- name: "SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
+- name: 'SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured'
   lineinfile:
     dest: /etc/rsyslog.conf
     regexp: '^\$FileCreateMode'
@@ -467,11 +472,12 @@
     - rule_4.2.1.3
     - low
 
-- name: "SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
+- name: 'SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured'
   find:
-    paths: /etc/rsyslog.d/
+    paths:
+      - /etc/rsyslog.d/
     recurse: yes
-    patterns: "*.conf"
+    patterns: '*.conf'
   register: rsyslogd_conf_files
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -482,10 +488,10 @@
     - rule_4.2.1.3
     - low
 
-- name: "SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured"
+- name: 'SCORED | 4.2.1.3 | PATCH | Ensure rsyslog default file permissions configured'
   lineinfile:
     state: present
-    dest: "{{ item }}"
+    dest: '{{ item }}'
     regexp: '^\$FileCreateMode'
     line: '$FileCreateMode 0640'
     backup: yes
@@ -501,11 +507,11 @@
     - rule_4.2.1.3
     - low
 
-- name: "SCORED | 4.2.1.4 | PATCH | Ensure rsyslog is configured to send logs to a remote log host"
+- name: 'SCORED | 4.2.1.4 | PATCH | Ensure rsyslog is configured to send logs to a remote log host'
   lineinfile:
     dest: /etc/rsyslog.conf
     regexp: "^\\*\\.\\*"
-    line: "*.* @@{{ amazonlinux2cis_rsyslog_loghost_address }}"
+    line: '*.* @@{{ amazonlinux2cis_rsyslog_loghost_address }}'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - amazonlinux2cis_rsyslog is defined and amazonlinux2cis_rsyslog
@@ -515,7 +521,7 @@
     - rule_4.2.1.4
     - low
 
-- name: "NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts."
+- name: 'NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts.'
   lineinfile:
     dest: /etc/rsyslog.conf
     regexp: '^\$ModLoad imtcp'
@@ -531,7 +537,7 @@
     - rule_4.2.1.5
     - low
 
-- name: "NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts."
+- name: 'NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts.'
   lineinfile:
     dest: /etc/rsyslog.conf
     regexp: '^\$InputTCPServerRun 514'
@@ -547,7 +553,7 @@
     - rule_4.2.1.5
     - low
 
-- name: "NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts."
+- name: 'NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts.'
   lineinfile:
     dest: /etc/rsyslog.conf
     regexp: '^\$ModLoad imtcp'
@@ -563,7 +569,7 @@
     - rule_4.2.1.5
     - low
 
-- name: "NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts."
+- name: 'NOTSCORED | 4.2.1.5 | PATCH | Ensure remote rsyslog messages are only accepted on designated log hosts.'
   lineinfile:
     dest: /etc/rsyslog.conf
     regexp: '^\$InputTCPServerRun 514'
@@ -579,7 +585,7 @@
     - rule_4.2.1.5
     - low
 
-- name: "SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled"
+- name: 'SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled'
   yum:
     name: syslog-ng
     state: present
@@ -592,7 +598,7 @@
     - rule_4.2.2.1
     - low
 
-- name: "SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled"
+- name: 'SCORED | 4.2.2.1 | PATCH | Ensure syslog-ng service is enabled'
   systemd:
     name: syslog-ng
     enabled: yes
@@ -606,9 +612,9 @@
     - rule_4.2.2.1
     - low
 
-- name: "NOTSCORED | 4.2.2.2 | PATCH | Ensure logging is configured"
+- name: 'NOTSCORED | 4.2.2.2 | PATCH | Ensure logging is configured'
   debug:
-    msg: "Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment."
+    msg: 'Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - amazonlinux2cis_syslog_ng is defined and amazonlinux2cis_syslog_ng
@@ -618,7 +624,7 @@
     - rule_4.2.2.2
     - low
 
-- name: "SCORED | 4.2.2.3 | PATCH | Ensure syslog-ng default file permissions configured"
+- name: 'SCORED | 4.2.2.3 | PATCH | Ensure syslog-ng default file permissions configured'
   lineinfile:
     dest: /etc/syslog-ng/syslog-ng.conf
     regexp: '^perm(0640);'
@@ -633,9 +639,9 @@
     - rule_4.2.2.3
     - low
 
-- name: "NOTSCORED | 4.2.2.4 | PATCH | Ensure syslog-ng is configured to send logs to a remote log host"
+- name: 'NOTSCORED | 4.2.2.4 | PATCH | Ensure syslog-ng is configured to send logs to a remote log host'
   debug:
-    msg: "Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment."
+    msg: 'Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - amazonlinux2cis_syslog_ng is defined and amazonlinux2cis_syslog_ng
@@ -645,9 +651,9 @@
     - rule_4.2.2.4
     - low
 
-- name: "NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts"
+- name: 'NOTSCORED | 4.2.2.5 | PATCH | Ensure remote syslog-ng messages are only accepted on designated log hosts'
   debug:
-    msg: "Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment."
+    msg: 'Edit the log lines in the /etc/syslog-ng/syslog-ng.conf file as appropriate for your environment.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - amazonlinux2cis_syslog_ng is defined and amazonlinux2cis_syslog_ng
@@ -657,9 +663,9 @@
     - rule_4.2.2.5
     - low
 
-- name: "SCORED | 4.2.3 | PATCH | Ensure rsyslog or syslog-ng is installed"
+- name: 'SCORED | 4.2.3 | PATCH | Ensure rsyslog or syslog-ng is installed'
   debug:
-    msg: "This task was performed during rsyslog-service check: 4.2.1.1 or during syslog-ng-service check: 4.2.2.1"
+    msg: 'This task was performed during rsyslog-service check: 4.2.1.1 or during syslog-ng-service check: 4.2.2.1'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - amazonlinux2cis_syslog_ng is defined or amazonlinux2cis_rsyslog is defined
@@ -669,7 +675,7 @@
     - rule_4.2.3
     - low
 
-- name: "SCORED | 4.2.4 | PATCH | Ensure permissions on all logfiles are configured"
+- name: 'SCORED | 4.2.4 | PATCH | Ensure permissions on all logfiles are configured'
   command: find /var/log -type f -exec chmod g-wx,o-rwx {} +
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -679,9 +685,9 @@
     - rule_4.2.4
     - low
 
-- name: "NOTSCORED | 4.3 | PATCH | Ensure logrotate is configured"
+- name: 'NOTSCORED | 4.3 | PATCH | Ensure logrotate is configured'
   debug:
-    msg: "Edit /etc/logrotate.conf and /etc/logrotate.d/* to ensure logs are rotated according to site policy."
+    msg: 'Edit /etc/logrotate.conf and /etc/logrotate.d/* to ensure logs are rotated according to site policy.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:

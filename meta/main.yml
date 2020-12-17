@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: cis-amazon-linux-2
+  author: radsec
+  description: Ansible role for Amazon Linux 2 CIS Compliance
+  license: license (GPL-2.0-or-later, MIT, etc)
+
+  min_ansible_version: 2.5
+
+  platforms:
+    - name: Amazon
+      versions:
+        - '(Karoo)'
+        - '2'
+
+  galaxy_tags: []
+
+dependencies: []
