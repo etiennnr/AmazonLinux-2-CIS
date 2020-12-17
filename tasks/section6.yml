@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 ## END COPYRIGHT NOTICE ##
-- name: "NOTSCORED | 6.1.1 | PATCH | Audit system file permissions"
+- name: 'NOTSCORED | 6.1.1 | PATCH | Audit system file permissions'
   command: /bin/true
   changed_when: no
   when:
@@ -15,7 +15,7 @@
     - level2
     - low
 
-- name: "SCORED | 6.1.2 | PATCH | Ensure permissions on /etc/passwd are configured"
+- name: 'SCORED | 6.1.2 | PATCH | Ensure permissions on /etc/passwd are configured'
   file:
     dest: /etc/passwd
     owner: root
@@ -27,7 +27,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.3 | PATCH | Ensure permissions on /etc/shadow are configured"
+- name: 'SCORED | 6.1.3 | PATCH | Ensure permissions on /etc/shadow are configured'
   file:
     dest: /etc/shadow
     owner: root
@@ -41,7 +41,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.4 | PATCH | Ensure permissions on /etc/group are configured"
+- name: 'SCORED | 6.1.4 | PATCH | Ensure permissions on /etc/group are configured'
   file:
     dest: /etc/group
     owner: root
@@ -55,7 +55,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.5 | PATCH | Ensure permissions on /etc/gshadow are configured"
+- name: 'SCORED | 6.1.5 | PATCH | Ensure permissions on /etc/gshadow are configured'
   file:
     dest: /etc/gshadow
     owner: root
@@ -69,7 +69,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.6 | PATCH | Ensure permissions on /etc/passwd- are configured"
+- name: 'SCORED | 6.1.6 | PATCH | Ensure permissions on /etc/passwd- are configured'
   file:
     dest: /etc/passwd-
     owner: root
@@ -83,7 +83,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.7 | PATCH | Ensure permissions on /etc/shadow- are configured"
+- name: 'SCORED | 6.1.7 | PATCH | Ensure permissions on /etc/shadow- are configured'
   file:
     dest: /etc/shadow-
     owner: root
@@ -97,7 +97,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.8 | PATCH | Ensure permissions on /etc/group- are configured"
+- name: 'SCORED | 6.1.8 | PATCH | Ensure permissions on /etc/group- are configured'
   file:
     dest: /etc/group-
     owner: root
@@ -111,7 +111,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.9 | PATCH | Ensure permissions on /etc/gshadow- are configured"
+- name: 'SCORED | 6.1.9 | PATCH | Ensure permissions on /etc/gshadow- are configured'
   file:
     dest: /etc/gshadow-
     owner: root
@@ -125,7 +125,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.10 | PATCH | Ensure no world writable files exist"
+- name: 'SCORED | 6.1.10 | PATCH | Ensure no world writable files exist'
   command: /bin/true
   changed_when: no
   when:
@@ -136,7 +136,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.11 | PATCH | Ensure no unowned files or directories exist"
+- name: 'SCORED | 6.1.11 | PATCH | Ensure no unowned files or directories exist'
   command: /bin/true
   changed_when: no
   when:
@@ -147,7 +147,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.1.12 | PATCH | Ensure no ungrouped files or directories exist"
+- name: 'SCORED | 6.1.12 | PATCH | Ensure no ungrouped files or directories exist'
   command: /bin/true
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -157,7 +157,7 @@
     - level1
     - low
 
-- name: "NOTSCORED | 6.1.13 | PATCH | Audit SUID executables"
+- name: 'NOTSCORED | 6.1.13 | PATCH | Audit SUID executables'
   command: /bin/true
   changed_when: no
   when:
@@ -168,7 +168,7 @@
     - level1
     - low
 
-- name: "NOTSCORED | 6.1.14 | PATCH | Audit SGID executables"
+- name: 'NOTSCORED | 6.1.14 | PATCH | Audit SGID executables'
   command: /bin/true
   changed_when: no
   when:
@@ -179,9 +179,9 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.1 | PATCH | Ensure password fields are not empty"
+- name: 'SCORED | 6.2.1 | PATCH | Ensure password fields are not empty'
   command: passwd -l {{ item }}
-  with_items: "{{ empty_password_accounts.stdout_lines }}"
+  with_items: '{{ empty_password_accounts.stdout_lines }}'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - empty_password_accounts is defined and empty_password_accounts.rc
@@ -224,9 +224,9 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.5 | PATCH | Ensure root is the only UID 0 account"
+- name: 'SCORED | 6.2.5 | PATCH | Ensure root is the only UID 0 account'
   command: passwd -l {{ item }}
-  with_items: "{{ uid_zero_accounts_except_root.stdout_lines }}"
+  with_items: '{{ uid_zero_accounts_except_root.stdout_lines }}'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - uid_zero_accounts_except_root is defined and uid_zero_accounts_except_root.rc
@@ -236,7 +236,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
+- name: 'SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity'
   copy:
     src: scripts/6.2.6.sh
     dest: /opt/6.2.6.sh
@@ -252,7 +252,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
+- name: 'SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity'
   shell: /opt/6.2.6.sh
   args:
     executable: /bin/bash
@@ -278,9 +278,9 @@
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
+- name: 'SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity'
   debug:
-    msg: "PASS | 6.2.6 | root PATH integrity"
+    msg: 'PASS | 6.2.6 | root PATH integrity'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - root_path_integrity is defined and root_path_integrity.stdout == ""
@@ -290,7 +290,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity"
+- name: 'SCORED | 6.2.6 | PATCH | Ensure root PATH Integrity'
   file:
     path: /opt/6.2.6.sh
     owner: root
@@ -447,7 +447,7 @@
     - patch
     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+- name: 'SCORED | 6.2.9 | PATCH | Ensure users own their home directories'
   copy:
     src: scripts/6.2.9.sh
     dest: /opt/6.2.9.sh
@@ -463,7 +463,7 @@
     - patch
     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+- name: 'SCORED | 6.2.9 | PATCH | Ensure users own their home directories'
   shell: /opt/6.2.9.sh
   args:
     executable: /bin/bash
@@ -487,7 +487,7 @@
 #     - level1
 #     - patch
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+- name: 'SCORED | 6.2.9 | PATCH | Ensure users own their home directories'
   debug:
     msg: "PASS | 6.2.9 | Users' own their home directories."
   when:
@@ -499,7 +499,7 @@
     - patch
     - low
 
-- name: "SCORED | 6.2.9 | PATCH | Ensure users own their home directories"
+- name: 'SCORED | 6.2.9 | PATCH | Ensure users own their home directories'
   file:
     path: /opt/6.2.9.sh
     owner: root
@@ -582,11 +582,11 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.11 | PATCH | Ensure no users have .forward files"
+- name: 'SCORED | 6.2.11 | PATCH | Ensure no users have .forward files'
   file:
     state: absent
-    dest: "~{{ item }}/.forward"
-  with_items: "{{ users.stdout_lines }}"
+    dest: '~{{ item }}/.forward'
+  with_items: '{{ users.stdout_lines }}'
   no_log: True
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -597,11 +597,11 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.12 | PATCH | Ensure no users have .netrc files"
+- name: 'SCORED | 6.2.12 | PATCH | Ensure no users have .netrc files'
   file:
     state: absent
-    dest: "~{{ item }}/.netrc"
-  with_items: "{{ users.stdout_lines }}"
+    dest: '~{{ item }}/.netrc'
+  with_items: '{{ users.stdout_lines }}'
   no_log: True
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -685,11 +685,11 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.14 | PATCH | Ensure no users have .rhosts files"
+- name: 'SCORED | 6.2.14 | PATCH | Ensure no users have .rhosts files'
   file:
     state: absent
-    dest: "~{{ item }}/.rhosts"
-  with_items: "{{ users.stdout_lines }}"
+    dest: '~{{ item }}/.rhosts'
+  with_items: '{{ users.stdout_lines }}'
   no_log: yes
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
@@ -700,7 +700,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
+- name: 'SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group'
   copy:
     src: scripts/6.2.15.sh
     dest: /opt/6.2.15.sh
@@ -716,7 +716,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
+- name: 'SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group'
   shell: /opt/6.2.15.sh
   args:
     executable: /bin/bash
@@ -741,10 +741,10 @@
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
+- name: 'SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group'
   debug:
-    msg: "PASS | 6.2.15 | All groups exist in /etc/group."
-  when: 
+    msg: 'PASS | 6.2.15 | All groups exist in /etc/group.'
+  when:
     - check_groups_in_passwd is defined and check_groups_in_passwd.stdout == ""
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
   tags:
@@ -753,7 +753,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group"
+- name: 'SCORED | 6.2.15 | PATCH | Ensure all groups in /etc/passwd exist in /etc/group'
   file:
     path: /opt/6.2.15.sh
     owner: root
@@ -768,7 +768,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
+- name: 'SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist'
   copy:
     src: scripts/6.2.16.sh
     dest: /opt/6.2.16.sh
@@ -784,7 +784,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
+- name: 'SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist'
   shell: /opt/6.2.16.sh
   args:
     executable: /bin/bash
@@ -809,9 +809,9 @@
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
+- name: 'SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist'
   debug:
-    msg: "PASS | 6.2.16 | No duplicate UIDs exist."
+    msg: 'PASS | 6.2.16 | No duplicate UIDs exist.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - duplicate_uids is defined and duplicate_uids.stdout == ""
@@ -821,7 +821,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist"
+- name: 'SCORED | 6.2.16 | PATCH | Ensure no duplicate UIDs exist'
   file:
     path: /opt/6.2.16.sh
     owner: root
@@ -836,7 +836,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
+- name: 'SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist'
   copy:
     src: scripts/6.2.17.sh
     dest: /opt/6.2.17.sh
@@ -852,7 +852,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
+- name: 'SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist'
   shell: /opt/6.2.17.sh
   args:
     executable: /bin/bash
@@ -877,9 +877,9 @@
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
+- name: 'SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist'
   debug:
-    msg: "PASS | 6.2.17 | No duplicate GIDs exist."
+    msg: 'PASS | 6.2.17 | No duplicate GIDs exist.'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - duplicate_gids is defined and duplicate_gids.stdout == ""
@@ -889,7 +889,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist"
+- name: 'SCORED | 6.2.17 | PATCH | Ensure no duplicate GIDs exist'
   file:
     path: /opt/6.2.17.sh
     owner: root
@@ -904,7 +904,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
+- name: 'SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist'
   copy:
     src: scripts/6.2.18.sh
     dest: /opt/6.2.18.sh
@@ -920,7 +920,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
+- name: 'SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist'
   shell: /opt/6.2.18.sh
   args:
     executable: /bin/bash
@@ -945,9 +945,9 @@
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
+- name: 'SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist'
   debug:
-    msg: "PASS | 6.2.18 | No duplicate user names exist"
+    msg: 'PASS | 6.2.18 | No duplicate user names exist'
   when: duplicate_users.stdout == ""
   tags:
     - rule_6.2.18
@@ -955,7 +955,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist"
+- name: 'SCORED | 6.2.18 | PATCH | Ensure no duplicate user names exist'
   file:
     path: /opt/6.2.18.sh
     owner: root
@@ -970,7 +970,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
+- name: 'SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist'
   copy:
     src: scripts/6.2.19.sh
     dest: /opt/6.2.19.sh
@@ -986,7 +986,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
+- name: 'SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist'
   shell: /opt/6.2.19.sh
   args:
     executable: /bin/bash
@@ -1011,9 +1011,9 @@
 #     - level1
 #     - low
 
-- name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
+- name: 'SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist'
   debug:
-    msg: "PASS | 6.2.19 | No duplicate group names exist"
+    msg: 'PASS | 6.2.19 | No duplicate group names exist'
   when:
     - amazonlinux2cis_level1 is defined and amazonlinux2cis_level1
     - duplicate_groups is defined and duplicate_groups.stdout == ""
@@ -1023,7 +1023,7 @@
     - level1
     - low
 
-- name: "SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist"
+- name: 'SCORED | 6.2.19 | PATCH | Ensure no duplicate group names exist'
   file:
     path: /opt/6.2.19.sh
     owner: root
